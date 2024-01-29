@@ -6,26 +6,14 @@ axios.defaults.headers.common['x-api-key'] =
 export { fetchBreeds, fetchCatByBreed };
 
 function fetchBreeds() {
-  return axios
-    .get(`${BASE_URL}/breeds`)
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => {
-      console.error('Error fetching breeds:', error.message);
-      throw error;
-    });
+  return axios.get(`${BASE_URL}/breeds`).then(response => {
+    return response.data;
+  });
 }
 
 function fetchCatByBreed(breedId) {
   const params = new URLSearchParams({ breed_ids: breedId });
-  return axios
-    .get(`${BASE_URL}/images/search?${params}`)
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => {
-      console.error('Error fetching info:', error.message);
-      throw error;
-    });
+  return axios.get(`${BASE_URL}/images/search?${params}`).then(response => {
+    return response.data;
+  });
 }

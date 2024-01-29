@@ -44,10 +44,14 @@ function addInfo(event) {
   setCatInfo('none');
   setLoader('block');
   const selectedBreedId = event.target.value;
-  fetchCatByBreed(selectedBreedId).then(data => {
-    const arr = data[0].breeds[0];
+  fetchCatByBreed(selectedBreedId)
+    .then(data => {
+      if (data == undefined) {
+        throw new Error();
+      }
+      const arr = data[0].breeds[0];
 
-    catInfo.innerHTML = `
+      catInfo.innerHTML = `
       <img class="cat-image" src="${data[0].url}" alt="Cat Image">
       <div class="cat-content">
       <h1><strong> ${arr.alt_names}</strong> </h1>
@@ -55,9 +59,13 @@ function addInfo(event) {
       <p><strong>Temperament:</strong> ${arr.temperament}</p></div>
     `;
 
-    setLoader('none');
-    setCatInfo('flex');
-  });
+      setLoader('none');
+      setCatInfo('flex');
+    })
+    .catch(error => {
+      setLoader('none');
+      getError();
+    });
 }
 
 function getError() {
